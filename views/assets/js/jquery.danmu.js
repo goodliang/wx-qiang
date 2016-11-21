@@ -114,9 +114,7 @@ var cyntax = {
             this.timer_id = setTimeout($.proxy(this._timer_fn, this), this.options.delay);
         }
     };
-
     $.jQueryPlugin("timer");
-
 })(jQuery);
 
 
@@ -154,7 +152,8 @@ var cyntax = {
         anims = {};
 
     function now() {
-        return new Date().getTime(); }
+        return new Date().getTime();
+    }
 
     $.fn.animate = function(prop, speed, easing, callback) {
         var optall = $.speed(speed, easing, callback);
@@ -273,26 +272,20 @@ var cyntax = {
                 //row_conut=parseInt(heig/options.font_size_big);
                 if ($(element).data("danmu_array")[$(element).data("nowtime")]) {
                     var danmus = $(element).data("danmu_array")[$(element).data("nowtime")];
+                    console.log(danmus)
                     for (var i = 0; i < danmus.length; i++) {
                         var a_danmu = "<div class='flying flying2' id='linshi'></div>";
                         $(element).append(a_danmu);
                         $("#linshi").html(danmus[i].text);
-                        // console.log(danmus[i].text);
+                        console.log(danmus);
                         $("#linshi").css({
                             "color": danmus[i].color,
                             "text-shadow": " 0px 0px 2px #000000",
                             "-moz-opacity": $(element).data("opacity"),
                             "opacity": $(element).data("opacity"),
-                            "white-space": "nowrap",
+                            // "white-space": "nowrap",
                             "font-weight": "bold"
                         });
-                        if (danmus[i].color<"#777777")
-                        	$("#linshi").css({
-                        		"text-shadow":" 0px 0px 2px #FFFFFF"
-                        	});
-                        if (danmus[i].hasOwnProperty('isnew')) {
-                            $("#linshi").css({ "border": "2px solid " + danmus[i].color });
-                        }
                         if (danmus[i].size == 0) $("#linshi").css("font-size", options.font_size_small);
                         if (danmus[i].position == 0) {
                             //var top_local=parseInt(30+(options.height-60)*Math.random());//随机高度
@@ -301,58 +294,51 @@ var cyntax = {
                                 var row = parseInt(row_conut * Math.random());
                             }
                             rows_used.push(row);
-                            //console.log(rows_used.length);
                             if (rows_used.length == row_conut) {
                                 rows_used = new Array();
                                 row_conut = parseInt(heig / options.font_size_big);
                             }
                             var top_local = (row) * options.font_size_big;
-
                             $("#linshi").css({
                                 "position": "absolute",
                                 "top": top_local,
                                 "left": options.width
                             });
+                            $('.item-list').css({
+                                "background": 'none',
+                                "font-size": "80px"
+                            })
+                            $('.item-list .head').css({
+                                "display": 'none'
+                            })
+                            $('.item-list .name').css({
+                                "display": 'none'
+                            })
                             var fly_tmp_name = "fly" + parseInt(heig * Math.random()).toString();
                             $("#linshi").attr("id", fly_tmp_name);
                             $('#' + fly_tmp_name).animate({ left: -$(this).width() * 3, }, options.speed, function() { $(this).remove(); });
                         } else if (danmus[i].position == 1) {
-                            var top_tmp_name = "top" + parseInt(10000 * Math.random()).toString();
-                            $("#linshi").attr("id", top_tmp_name)
-                            $('#' + top_tmp_name).css({
-                                "width": options.width,
-                                "text-align": "center",
-                                "position": "absolute",
-                                "top": (5 + $(element).data("topspace"))
-                            });
-                            $(element).data("topspace", $(element).data("topspace") + options.font_size_big);
-                            $('#' + top_tmp_name).fadeTo(options.top_botton_danmu_time, $(element).data("opacity"), function() {
-                                $(this).remove();
-                                $(element).data("topspace", $(element).data("topspace") - options.font_size_big);
-                            });
-                        } else if (danmus[i].position == 2) {
                             var bottom_tmp_name = "top" + parseInt(10000 * Math.random()).toString();
                             $("#linshi").attr("id", bottom_tmp_name)
                             $('#' + bottom_tmp_name).css({
                                 "width": options.width,
-                                "text-align": "center",
-                                "position": "absolute",
-                                "bottom": 0 + $(element).data("bottomspace")
+                                // "text-align": "center",
+                                // "position": "absolute",
+                                // "top": 0 + $(element).data("bottomspace")
                             });
-                            console.log($(element).data("bottomspace"));
-                            $(element).data("bottomspace", $(element).data("bottomspace") + options.font_size_big);
-                            $('#' + bottom_tmp_name).fadeTo(options.top_botton_danmu_time, $(element).data("opacity"), function() {
-                                $(this).remove();
-                                console.log($(this));
-                                $(element).data("bottomspace", $(element).data("bottomspace") - options.font_size_big)
-                            });
-
+                            var _hig = $(element).data("bottomspace") + $('#' + bottom_tmp_name).height()
+                            $(element).data("bottomspace", _hig);
+                            // $('#' + bottom_tmp_name).animate({
+                            //     "top": parseInt($('#' + bottom_tmp_name).css('top')) - parseInt($('#' + bottom_tmp_name).css('height')) + 'px' 
+                            // }, options.top_botton_danmu_time)
+                            // $('#' + bottom_tmp_name).fadeTo(options.top_botton_danmu_time, $(element).data("opacity"), function() {
+                            //     $(this).remove();
+                            //     $(element).data("bottomspace", $(element).data("bottomspace") - options.font_size_big)
+                            // });
                         } //else if
                     } // for in danmus
                 } //if (danmus)
                 $(element).data("nowtime", $(element).data("nowtime") + 1);
-
-
             }
         });
     };
@@ -429,9 +415,6 @@ var cyntax = {
             if (action) data[action](arg);
         })
     };
-
-
-
     $.fn.danmu = Plugin;
     $.fn.danmu.Constructor = Danmu;
 

@@ -21,83 +21,88 @@
         overflow: hidden;
     }
     
-    #danmu {
-       
-    }
+    #danmu {}
     
-    .flying {
+    .item-list {
         background: rgba(255, 255, 255, 0.2);
-        border-radius: 0 20px 20px 0;
-        padding: 5px 20px;
-        margin: 20px 0;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 0 30px 20px;
+        overflow: hidden;
         font-family: "微软雅黑";
-        white-space: nowrap;
-        position: relative;
     }
     
-    .flying img {
-        position: absolute;
-        top: 50%;
-        margin-top: -30px;
-        left: -50px;
+    .item-list .head {
+        float: left;
         width: 60px;
         height: 60px;
-        border-radius: 100%;
+        border-radius: 2px;
     }
     
-    .flying span {
-        position: absolute;
-        width: 100%;
-        text-align: left;
-        /*background: rgba(255, 255, 255, 0.2);*/
-        left: -50px;
-        top: 55px;
+    .item-list .name {
+        margin-left: 80px;
         color: #fff;
         font-size: 18px;
+        margin-bottom: 5px;
     }
-    .main{
+    
+    .item-list .text {
+        margin-left: 80px;
+        line-height: 1.5em;
+    }
+    
+    .main {
         position: absolute;
-        left:0;
+        left: 0;
         right: 0;
-        top:0;
-        bottom:0;
-         background-image: url('assets/img/dm_bg.jpg');
+        top: 0;
+        bottom: 0;
+        /* background-image: url('assets/img/bg01.jpg');*/
+        background-image: url('assets/img/dm_bg.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
     }
-    .headBar{
+    
+    .headBar {
         overflow: hidden;
-        padding: 20px;
-        color:#fff;
+        padding: 30px 50px;
+        color: #fff;
     }
-    .headBar .logo{
+    
+    .headBar .logo {
         float: left;
     }
-    .headBar .code{
+    
+    .headBar .code {
         float: right;
     }
-    .headBar .logo h2{
-        color:#fff;
+    
+    .headBar .logo h2 {
+        color: #fff;
         font-size: 60px;
         float: left;
         padding: 20px 0 0 50px;
     }
-    .headBar .logo img{
-        float:left;
+    
+    .headBar .logo img {
+        float: left;
         padding-top: 30px;
         width: 150px;
     }
-    .danmu-box{
-        height: calc(100% - 150px)
+    
+    .danmu-box {
+        height: calc(100% - 170px)
     }
-    .headBar .code img{
+    
+    .headBar .code img {
         float: right;
         padding: 3px;
         background: #fff;
         width: 100px;
         height: 100px;
     }
-    .headBar .code span{
+    
+    .headBar .code span {
         padding-top: 20px;
         font-size: 24px;
         line-height: 1.5;
@@ -113,7 +118,8 @@
     <!--dm start-->
     <div class="main">
         <div class="headBar">
-            <div class="logo"><img src="assets/img/home-logo.png" alt=""><h2>会唐网微信互动墙</h2></div>
+            <div class="logo"><img src="assets/img/home-logo.png" alt="">
+                <h2>会唐网微信互动墙</h2></div>
             <div class="code"><img src="http://links.eventown.com.cn/images/4.0/qr_code.jpg" alt=""><span>扫一扫<br>关注发送信息</span></div>
         </div>
         <div class="danmu-box">
@@ -129,7 +135,7 @@
     var textArr = [];
     var colorArr = ['#fff', '#ff8a00', '#fff001', '#96ff00', '#fff', '#ff0279', '#fff'];
     //初始化
-    var _height = $(window).height() - 180
+    var _height = $(window).height() - 250
     $("#danmu").danmu({
         left: 0,
         top: 180,
@@ -137,16 +143,16 @@
         width: "100%",
         speed: 20000,
         opacity: 1,
-        font_size_small: 24,
-        font_size_big: 28,
+        font_size_small: 30,
+        font_size_big: 50,
         top_botton_danmu_time: 6000
     });
 
     function send(data, fontColor, fontSize) {
-        var text = '<img  src=' + data.head + '>' + '<span>' + data.name + '</span>' + data.val;
-        var color = fontColor;
-        var size = fontSize;
-        var position = '0';
+        var text = '<div class= item-list ><img class=head src=' + data.head + '>' + '<h5 class=name>' + data.name + '说:</h5>' + '<p class=text>' + data.val + '</p></div>';
+        var color = '#fff';
+        var size = '0';
+        var position = '1';
         var time = $('#danmu').data("nowtime") + 5;
         var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
         var new_obj = eval('(' + text_obj + ')');
