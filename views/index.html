@@ -21,7 +21,7 @@
         overflow: hidden;
     }
     
-    #danmu {}
+    #danmu-level {}
     
     .item-list {
         background: rgba(255, 255, 255, 0.2);
@@ -123,7 +123,8 @@
             <div class="code"><img src="http://links.eventown.com.cn/images/4.0/qr_code.jpg" alt=""><span>扫一扫<br>关注发送信息</span></div>
         </div>
         <div class="danmu-box">
-            <div id="danmu"></div>
+            <div id="danmu-level"></div>
+            <div id="danmu-vertical"></div>
         </div>
     </div>
     <!--end dm-->
@@ -136,7 +137,7 @@
     var colorArr = ['#fff', '#ff8a00', '#fff001', '#96ff00', '#fff', '#ff0279', '#fff'];
     //初始化
     var _height = $(window).height() - 250
-    $("#danmu").danmu({
+    $("#danmu-level").danmu({
         left: 0,
         top: 180,
         height: _height,
@@ -145,28 +146,52 @@
         opacity: 1,
         font_size_small: 30,
         font_size_big: 50,
-        top_botton_danmu_time: 6000
+        top_botton_danmu_time: 6000,
+        direction: 0// 滚动方向
     });
-
-    function send(data, fontColor, fontSize) {
+    $("#danmu-vertical").danmu({
+        left: 0,
+        top: 180,
+        height: _height,
+        width: "100%",
+        speed: 20000,
+        opacity: 1,
+        font_size_small: 30,
+        font_size_big: 50,
+        top_botton_danmu_time: 6000,
+        direction: 1// 滚动方向
+    });
+    function sendLevel(data, fontColor, fontSize) {
+        var text = '<div class= item-list ><img class=head src=' + data.head + '>' + '<h5 class=name>' + data.name + '说:</h5>' + '<p class=text>' + data.val + '</p></div>';
+        var color = fontColor;
+        var size = '0';
+        var position = '1';
+        var time = $('#danmu-level').data("nowtime") + 5;
+        var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
+        var new_obj = eval('(' + text_obj + ')');
+        $('#danmu-level').danmu("add_danmu", new_obj);
+    }
+    function sendVertical(data, fontColor, fontSize) {
         var text = '<div class= item-list ><img class=head src=' + data.head + '>' + '<h5 class=name>' + data.name + '说:</h5>' + '<p class=text>' + data.val + '</p></div>';
         var color = '#fff';
         var size = '0';
         var position = '1';
-        var time = $('#danmu').data("nowtime") + 5;
+        var time = $('#danmu-vertical').data("nowtime") + 5;
         var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
         var new_obj = eval('(' + text_obj + ')');
-        $('#danmu').danmu("add_danmu", new_obj);
+        $('#danmu-vertical').danmu("add_danmu", new_obj);
     }
     // 重启弹幕
     function resumer() {
-        $('#danmu').danmu('danmu_resume');
+        $('#danmu-level').danmu('danmu_resume');
+        $('#danmu-vertical').danmu('danmu_resume');
     }
     // 接收数据
     var socket = io();
     socket.on('add', function(data) {
         resumer()
-        send(data, getReandomColor(), getReandomSize())
+        sendLevel(data, getReandomColor(), getReandomSize())
+        sendVertical(data, getReandomColor(), getReandomSize())
     });
 
     //随机获取颜色值
