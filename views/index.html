@@ -3,205 +3,285 @@
 
 <head>
     <meta charset="utf-8">
-    <title>会唐微信互动大屏演示</title>
+    <title>会鸽互娱抽奖演示</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <style type="text/css" media="screen">
-    /*d_screen start*/
-    
     * {
         margin: 0;
         padding: 0;
     }
     
+    body,
+    html {
+        width: 100%;
+        height: 100%;
+    }
+    
     body {
+        background-image: url(assets/img/bg.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .container {
+        width: 70%;
+        height: 70%;
+        position: absolute;
+        top: 15%;
+        left: 15%;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+        box-shadow: 0 0 10px #ccc;
+    }
+    
+    .hg-logo {
+        position: absolute;
+        top: 40px;
+        left: 15%;
+    }
+    
+    .ht-logo {
+        position: absolute;
+        bottom: 40px;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .ht-logo img {
+        display: inline-block;
+    }
+    
+    .pic-box {
         width: 100%;
         height: 100%;
         overflow: hidden;
+        position: relative;
     }
     
-    #danmu-level {}
-    
-    .item-list {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 5px;
-        padding: 20px;
-        margin: 0 30px 20px;
-        overflow: hidden;
-        font-family: "微软雅黑";
-    }
-    
-    .item-list .head {
-        float: left;
-        width: 60px;
-        height: 60px;
-        border-radius: 2px;
-    }
-    
-    .item-list .name {
-        margin-left: 80px;
-        color: #fff;
-        font-size: 18px;
-        margin-bottom: 5px;
-    }
-    
-    .item-list .text {
-        margin-left: 80px;
-        line-height: 1.5em;
-    }
-    
-    .main {
+    .avatar {
         position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        /* background-image: url('assets/img/bg01.jpg');*/
-        background-image: url('assets/img/dm_bg.jpg');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-    }
-    
-    .headBar {
-        overflow: hidden;
-        padding: 30px 50px;
-        color: #fff;
-    }
-    
-    .headBar .logo {
-        float: left;
-    }
-    
-    .headBar .code {
-        float: right;
-    }
-    
-    .headBar .logo h2 {
-        color: #fff;
-        font-size: 60px;
-        float: left;
-        padding: 20px 0 0 50px;
-    }
-    
-    .headBar .logo img {
-        float: left;
-        padding-top: 30px;
-        width: 150px;
-    }
-    
-    .danmu-box {
-        height: calc(100% - 170px)
-    }
-    
-    .headBar .code img {
-        float: right;
-        padding: 3px;
-        background: #fff;
         width: 100px;
         height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #265484;
     }
     
-    .headBar .code span {
-        padding-top: 20px;
-        font-size: 24px;
-        line-height: 1.5;
-        display: inline-block;
-        padding-right: 30px;
+    .avatar img {
+        width: 100%;
+    }
+    
+    #inner {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    
+    #inner>div {
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #2a66a6;
+    }
+    
+    .one,
+    .one_a {
+        background: url('assets/img/1.jpg') no-repeat;
+        background-size: 100% auto;
+    }
+    
+    .two,
+    .two_a {
+        background: url('assets/img/2.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .three,
+    .three_a {
+        background: url('assets/img/3.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .four,
+    .four_a {
+        background: url('assets/img/4.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .five,
+    .five_a {
+        background: url('assets/img/5.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .six,
+    .six_a {
+        background: url('assets/img/6.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .seven,
+    .seven_a {
+        background: url('assets/img/7.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .eight,
+    .eight_a {
+        background: url('assets/img/8.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .nine,
+    .nine_a {
+        background: url('assets/img/9.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .ten,
+    .ten_a {
+        background: url('assets/img/10.jpg') no-repeat;
+        background-size: auto 100%;
+    }
+    
+    .time-box {
         text-align: center;
     }
-    /*end .send*/
+    
+    .time-box .time {
+        color: #efffff;
+        width: 198px;
+        height: 196px;
+        line-height: 196px;
+        font-size: 60px;
+        text-align: center;
+        display: inline-block;
+        background: url('assets/img/time-bg.png') 7px 0;
+    }
+    
+    #start {
+        color: #e6eff0;
+        font-size: 30px;
+        display: inline-block;
+        border: 3px solid #6ac0f5;
+        border-radius: 5px;
+        padding: 5px 20px;
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 5px #ccc;
+    }
     </style>
 </head>
 
 <body>
-    <!--dm start-->
-    <div class="main">
-        <div class="headBar">
-            <div class="logo"><img src="assets/img/home-logo.png" alt="">
-                <h2>会唐网微信互动墙</h2></div>
-            <div class="code"><img src="http://links.eventown.com.cn/images/4.0/qr_code.jpg" alt=""><span>扫一扫<br>关注发送信息</span></div>
+    <div class="hg-logo">
+        <img src="assets/img/hg.png" alt="">
+    </div>
+    <div class="ht-logo">
+        <img src="assets/img/ht.png" alt="">
+    </div>
+    <div class="time-box">
+        <div id="start">
+            start
         </div>
-        <div class="danmu-box">
-            <div id="danmu-level"></div>
-            <div id="danmu-vertical"></div>
+        <div class="time"></div>
+    </div>
+    <div class="container">
+        <div class="pic-box" id="screen">
+            <div id="inner">
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+                <div class="six"></div>
+                <div class="seven"></div>
+                <div class="eight"></div>
+                <div class="nine"></div>
+                <div class="ten"></div>
+                <div class="one_a"></div>
+                <div class="two_a"></div>
+                <div class="three_a"></div>
+                <div class="four_a"></div>
+                <div class="five_a"></div>
+                <div class="six_a"></div>
+                <div class="seven_a"></div>
+                <div class="eight_a"></div>
+                <div class="nine_a"></div>
+                <div class="ten_a"></div>
+            </div>
         </div>
     </div>
-    <!--end dm-->
     <!-- Javascript -->
     <script src="assets/js/jquery-1.8.2.min.js"></script>
+    <script src="assets/js/test.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="assets/js/jquery.danmu.js"></script>
     <script type="text/javascript">
-    var textArr = [];
-    var colorArr = ['#fff', '#ff8a00', '#fff001', '#96ff00', '#fff', '#ff0279', '#fff'];
-    //初始化
-    var _height = $(window).height() - 250
-    $("#danmu-level").danmu({
-        left: 0,
-        top: 180,
-        height: _height,
-        width: "100%",
-        speed: 20000,
-        opacity: 1,
-        font_size_small: 30,
-        font_size_big: 50,
-        top_botton_danmu_time: 6000,
-        direction: 0// 滚动方向
-    });
-    $("#danmu-vertical").danmu({
-        left: 0,
-        top: 180,
-        height: _height,
-        width: "100%",
-        speed: 20000,
-        opacity: 1,
-        font_size_small: 30,
-        font_size_big: 50,
-        top_botton_danmu_time: 6000,
-        direction: 1// 滚动方向
-    });
-    function sendLevel(data, fontColor, fontSize) {
-        var text = '<div class= item-list ><img class=head src=' + data.head + '>' + '<h5 class=name>' + data.name + '说:</h5>' + '<p class=text>' + data.val + '</p></div>';
-        var color = fontColor;
-        var size = '0';
-        var position = '1';
-        var time = $('#danmu-level').data("nowtime") + 5;
-        var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
-        var new_obj = eval('(' + text_obj + ')');
-        $('#danmu-level').danmu("add_danmu", new_obj);
-    }
-    function sendVertical(data, fontColor, fontSize) {
-        var text = '<div class= item-list ><img class=head src=' + data.head + '>' + '<h5 class=name>' + data.name + '说:</h5>' + '<p class=text>' + data.val + '</p></div>';
-        var color = '#fff';
-        var size = '0';
-        var position = '1';
-        var time = $('#danmu-vertical').data("nowtime") + 5;
-        var text_obj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
-        var new_obj = eval('(' + text_obj + ')');
-        $('#danmu-vertical').danmu("add_danmu", new_obj);
-    }
-    // 重启弹幕
-    function resumer() {
-        $('#danmu-level').danmu('danmu_resume');
-        $('#danmu-vertical').danmu('danmu_resume');
-    }
-    // 接收数据
-    var socket = io();
-    socket.on('add', function(data) {
-        resumer()
-        sendLevel(data, getReandomColor(), getReandomSize())
-        sendVertical(data, getReandomColor(), getReandomSize())
-    });
+    var t = 15;
+    $(".time").html(t);
 
-    //随机获取颜色值
-    function getReandomColor() {
-        return colorArr[Math.floor(Math.random() * 7)]
-    }
-    //随机文字大小
-    function getReandomSize() {
-        return Math.round(Math.random())
-    }
+    // 随机头像
+    var sc = null;
+    document.getElementById("inner").innerHTML = '';
+    sc = new Screen('inner', {
+        ballsnum: 20,
+        spring: 0.3,
+        bounce: -0.9,
+        gravity: 0.01
+    });
+    sc.initialize();
+    $('#start').on('click', function() {
+            document.getElementById("inner").innerHTML = '';
+            sc = new Screen('inner', {
+                ballsnum: 20,
+                spring: 0.3,
+                bounce: -0.9,
+                gravity: 0.01
+            });
+            sc.initialize();
+            setInterval(function() {
+                    if (0 == t) {
+                        clearInterval(sc.timer);
+                        clearInterval(zoomTimer);
+                    } else {
+                        t -= 1;
+                        $(".time").html(t)
+                    }
+                },
+                970);
+            // $('#inner>div').css({
+            //     zoom: 1
+            // });
+            // var num = 0
+            // var zoomTimer = setInterval(function() {
+            //     $('#inner>div').each(function() {
+            //         var zooms = parseInt($(this).css('zoom'))
+            //         var math =  Math.random() / 700
+            //         num += math
+            //         n = zooms +num
+            //         $(this).animate({
+            //             zoom: n
+            //         });
+            //         console.log(n);
+            //     })
+
+            // }, 1000);
+            $('#inner .one').animate({
+                width:'150px',
+                height:'150px'
+            },15000,function(){
+                $('#inner .one').append()
+            });
+            $('#inner .two').animate({
+                width:'130px',
+                height:'130px'
+            },15000);
+            $('#inner .three').animate({
+                width:'115px',
+                height:'115px'
+            },15000);
+        })
+        // clearInterval(sc.timer);
     </script>
 </body>
 

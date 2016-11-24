@@ -27,9 +27,102 @@
 
 var cyntax = {
     plugins: {}
-};
+};;
+/*!
+ * Pause jQuery plugin v0.1
+ *
+ * Copyright 2010 by Tobia Conforto <tobia.conforto@gmail.com>
+ *
+ * Based on Pause-resume-animation jQuery plugin by Joe Weitzel
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2 of the License, or(at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+/* Changelog:
+ *
+ * 0.1    2010-06-13  Initial release
+ */
+(function() {
+    var $ = jQuery,
+        pauseId = 'jQuery.pause',
+        uuid = 1,
+        oldAnimate = $.fn.animate,
+        anims = {};
 
+    function now() {
+        return new Date().getTime(); }
 
+    $.fn.animate = function(prop, speed, easing, callback) {
+        var optall = $.speed(speed, easing, callback);
+        optall.complete = optall.old; // unwrap callback
+        return this.each(function() {
+            // check pauseId
+            if (!this[pauseId])
+                this[pauseId] = uuid++;
+            // start animation
+            var opt = $.extend({}, optall);
+            oldAnimate.apply($(this), [prop, $.extend({}, opt)]);
+            // store data
+            anims[this[pauseId]] = {
+                run: true,
+                prop: prop,
+                opt: opt,
+                start: now(),
+                done: 0
+            };
+        });
+    };
+
+    $.fn.pause = function() {
+        return this.each(function() {
+            // check pauseId
+            if (!this[pauseId])
+                this[pauseId] = uuid++;
+            // fetch data
+            var data = anims[this[pauseId]];
+            if (data && data.run) {
+                data.done += now() - data.start;
+                if (data.done > data.opt.duration) {
+                    // remove stale entry
+                    delete anims[this[pauseId]];
+                } else {
+                    // pause animation
+                    $(this).stop();
+                    data.run = false;
+                }
+            }
+        });
+    };
+
+    $.fn.resume = function() {
+        return this.each(function() {
+            // check pauseId
+            if (!this[pauseId])
+                this[pauseId] = uuid++;
+            // fetch data
+            var data = anims[this[pauseId]];
+            if (data && !data.run) {
+                // resume animation
+                data.opt.duration -= data.done;
+                data.done = 0;
+                data.run = true;
+                data.start = now();
+                oldAnimate.apply($(this), [data.prop, $.extend({}, data.opt)]);
+            }
+        });
+    };
+})();;
 /**
  * jQuery Timer Plugin
  * Project page - http://code.cyntaxtech.com/plugins/jquery-timer
@@ -114,113 +207,10 @@ var cyntax = {
             this.timer_id = setTimeout($.proxy(this._timer_fn, this), this.options.delay);
         }
     };
+
     $.jQueryPlugin("timer");
-})(jQuery);
 
-
-
-/*!
- * Pause jQuery plugin v0.1
- *
- * Copyright 2010 by Tobia Conforto <tobia.conforto@gmail.com>
- *
- * Based on Pause-resume-animation jQuery plugin by Joe Weitzel
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the Free
- * Software Foundation; either version 2 of the License, or(at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 51
- * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- */
-/* Changelog:
- *
- * 0.1    2010-06-13  Initial release
- */
-(function() {
-    var $ = jQuery,
-        pauseId = 'jQuery.pause',
-        uuid = 1,
-        oldAnimate = $.fn.animate,
-        anims = {};
-
-    function now() {
-        return new Date().getTime();
-    }
-
-    $.fn.animate = function(prop, speed, easing, callback) {
-        var optall = $.speed(speed, easing, callback);
-        optall.complete = optall.old; // unwrap callback
-        return this.each(function() {
-            // check pauseId
-            if (!this[pauseId])
-                this[pauseId] = uuid++;
-            // start animation
-            var opt = $.extend({}, optall);
-            oldAnimate.apply($(this), [prop, $.extend({}, opt)]);
-            // store data
-            anims[this[pauseId]] = {
-                run: true,
-                prop: prop,
-                opt: opt,
-                start: now(),
-                done: 0
-            };
-        });
-    };
-
-    $.fn.pause = function() {
-        return this.each(function() {
-            // check pauseId
-            if (!this[pauseId])
-                this[pauseId] = uuid++;
-            // fetch data
-            var data = anims[this[pauseId]];
-            if (data && data.run) {
-                data.done += now() - data.start;
-                if (data.done > data.opt.duration) {
-                    // remove stale entry
-                    delete anims[this[pauseId]];
-                } else {
-                    // pause animation
-                    $(this).stop();
-                    $(this).stop();
-                    $(this).stop();
-                    data.run = false;
-                }
-            }
-        });
-    };
-
-    $.fn.resume = function() {
-        return this.each(function() {
-            // check pauseId
-            if (!this[pauseId])
-                this[pauseId] = uuid++;
-            // fetch data
-            var data = anims[this[pauseId]];
-            if (data && !data.run) {
-                // resume animation
-                data.opt.duration -= data.done;
-                data.done = 0;
-                data.run = true;
-                data.start = now();
-                oldAnimate.apply($(this), [data.prop, $.extend({}, data.opt)]);
-            }
-        });
-    };
-})();
-
-
-
-
+})(jQuery);;
 /*!
  *弹幕引擎核心
  *
@@ -253,16 +243,14 @@ var cyntax = {
             "height": this.options.height,
             "z-index": this.options.zindex,
             "color": options.default_font_color,
-            "font-family": "SimHei",
-            "font-size": options.font_size_big,
             "overflow": "hidden"
         });
         var heig = this.$element.height();
         var row_conut = parseInt(heig / options.font_size_big);
         var rows_used = new Array();
-        var _class = this.$element.attr('id')
-        $('<div class='+ _class +'></div>').appendTo(this.$element);
-        this.$timer = $('.'+_class);
+        var $name = this.$element.attr('id')
+        $('<div class='+ $name +'></div>').appendTo(this.$element);
+        this.$timer = $('.'+$name);
         this.$timer.timer({
             delay: 100,
             repeat: options.sumtime,
@@ -275,58 +263,69 @@ var cyntax = {
                     for (var i = 0; i < danmus.length; i++) {
                         var a_danmu = "<div class='flying flying2' id='linshi'></div>";
                         $(element).append(a_danmu);
+                        console.log(danmus[i].text);
                         $("#linshi").html(danmus[i].text);
                         $("#linshi").css({
                             "color": danmus[i].color,
                             "text-shadow": " 0px 0px 2px #000000",
-                            //"-moz-opacity": $(element).data("opacity"),
-                            //"opacity": $(element).data("opacity"),
-                        });
-                        if (danmus[i].size == 0) $("#linshi").css("font-size", options.font_size_small);
-                    }
-                    if (options.direction == 0) {
-                        //var top_local=parseInt(30+(options.height-60)*Math.random());//随机高度
-                        var row = parseInt(row_conut * Math.random());
-                        while (rows_used.indexOf(row) >= 0) {
-                            var row = parseInt(row_conut * Math.random());
-                        }
-                        rows_used.push(row);
-                        if (rows_used.length == row_conut) {
-                            rows_used = new Array();
-                            row_conut = parseInt(heig / options.font_size_big);
-                        }
-                        var top_local = (row) * options.font_size_big;
-                        $("#linshi").css({
-                            "position": "absolute",
-                            "top": top_local,
-                            "left": options.width,
+                            "-moz-opacity": $(element).data("opacity"),
+                            "opacity": $(element).data("opacity"),
                             "white-space": "nowrap",
+                            "font-weight": "bold",
+                            "font-family": "SimHei",
+                            "font-size": options.font_size_big
                         });
-                        $('.item-list').css({
-                            "background": 'none',
-                            "font-size": "80px"
-                        })
-                        $('.item-list .head').css({
-                            "display": 'none'
-                        })
-                        $('.item-list .name').css({
-                            "display": 'none'
-                        })
-                        var fly_tmp_name = "fly" + parseInt(heig * Math.random()).toString();
-                        $("#linshi").attr("id", fly_tmp_name);
-                        $('#' + fly_tmp_name).animate({ left: -$(this).width() * 3, }, options.speed, function() { $(this).remove(); });
-                    } else if (options.direction == 1) {
-                        var bottom_tmp_name = "top" + parseInt(10000 * Math.random()).toString();
-                        $("#linshi").attr("id", bottom_tmp_name)
-                        var _hig = $(element).data("bottomspace") + $('#' + bottom_tmp_name).height()
-                        $(element).data("bottomspace", _hig);
-                        // var scrollUp = setInterval(function(){
+                        if (danmus[i].color < "#777777")
+                            $("#linshi").css({
+                                "text-shadow": " 0px 0px 2px #FFFFFF"
+                            });
+                        if (danmus[i].hasOwnProperty('isnew')) {
+                            $("#linshi").css({ "border": "2px solid " + danmus[i].color });
+                        }
+                        if (danmus[i].size == 0) $("#linshi").css("font-size", options.font_size_small);
+                        if (danmus[i].position == 0) {
+                            //var top_local=parseInt(30+(options.height-60)*Math.random());//随机高度
+                            var row = parseInt(row_conut * Math.random());
+                            while (rows_used.indexOf(row) >= 0) {
+                                var row = parseInt(row_conut * Math.random());
+                            }
+                            rows_used.push(row);
+                            //console.log(rows_used.length);
+                            if (rows_used.length == row_conut) {
+                                rows_used = new Array();
+                                row_conut = parseInt(heig / options.font_size_big);
+                            }
+                            var top_local = (row) * options.font_size_big;
 
-                        // },6000)
-                    } //else if
-
+                            $("#linshi").css({
+                                "position": "absolute",
+                                "top": top_local,
+                                "left": options.width
+                            });
+                            var fly_tmp_name = "fly" + parseInt(heig * Math.random()).toString();
+                            $("#linshi").attr("id", fly_tmp_name);
+                            $('#' + fly_tmp_name).animate({ left: -$(this).width() * 3, }, options.speed, function() { $(this).remove(); });
+                        } else if (danmus[i].position == 1) {
+                            var top_tmp_name = "top" + parseInt(10000 * Math.random()).toString();
+                            $("#linshi").attr("id", top_tmp_name)
+                            $('#' + top_tmp_name).css({
+                                "width": options.width,
+                                "text-align": "left",
+                                "position": "absolute",
+                                "top": (5 + $(element).data("topspace"))
+                            });
+                            var _hig = $(element).data("topspace") + $('#' + top_tmp_name).height()
+                            $(element).data("topspace", _hig);
+                            // $('#' + top_tmp_name).fadeTo(options.top_botton_danmu_time, $(element).data("opacity"), function() {
+                            //     $(this).remove();
+                            //     $(element).data("topspace", $(element).data("topspace") - options.font_size_big);
+                            // });
+                        } //else if
+                    } // for in danmus
                 } //if (danmus)
                 $(element).data("nowtime", $(element).data("nowtime") + 1);
+
+
             }
         });
     };
@@ -345,7 +344,6 @@ var cyntax = {
         font_size_small: 16,
         font_size_big: 24,
         opacity: "0.9",
-        direction: 0, //
         top_botton_danmu_time: 6000
     }
 
@@ -379,7 +377,7 @@ var cyntax = {
     };
 
     Danmu.prototype.danmu_hideall = function() {
-        $('.flying').remove();
+        $('.flying').css({ "opacity": 0 });
 
     };
 
@@ -392,6 +390,8 @@ var cyntax = {
         }
 
     };
+
+
     function Plugin(option, arg) {
         return this.each(function() {
             var $this = $(this);
@@ -402,6 +402,8 @@ var cyntax = {
             if (action) data[action](arg);
         })
     };
+
+
     $.fn.danmu = Plugin;
     $.fn.danmu.Constructor = Danmu;
 
