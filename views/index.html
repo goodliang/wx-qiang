@@ -27,20 +27,21 @@
     }
     
     .container {
-        width: 70%;
+        width: 80%;
         height: 70%;
         position: absolute;
         top: 15%;
-        left: 15%;
+        left: 10%;
         background: rgba(0, 0, 0, 0.3);
         border-radius: 5px;
         box-shadow: 0 0 10px #ccc;
+        z-index: 9
     }
     
     .hg-logo {
         position: absolute;
-        top: 40px;
-        left: 15%;
+        top: 25px;
+        left: 10%;
     }
     
     .ht-logo {
@@ -89,18 +90,23 @@
     
     .time-box {
         text-align: center;
-        margin-top: -20px;
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+        top: -15px;
     }
     
     .time-box .time {
         color: #efffff;
-        width: 198px;
-        height: 196px;
-        line-height: 196px;
-        font-size: 70px;
+        width: 150px;
+        height: 150px;
+        line-height: 150px;
+        font-size: 55px;
         text-align: center;
         display: inline-block;
-        background: url('assets/img/time-bg.png') 5px 0;
+        background: url('assets/img/time-bg.png') 3px 0;
+        -webkit-background-size: cover;
+        background-size: cover;
     }
     
     .selcet-box {
@@ -141,6 +147,10 @@
         display: inline-block;
         margin-left: 15px;
         cursor: pointer;
+    }
+    
+    .start.active {
+        background: url('assets/img/btn01_on.png');
     }
     
     .number-area {
@@ -219,14 +229,15 @@
     </div>
     <!-- Javascript -->
     <script src="assets/js/jquery-1.8.2.min.js"></script>
-    <script src="http://www.eventown.com/js/layer.js" type="text/javascript"></script>
+    <script src="assets/js/layer/layer.js" type="text/javascript"></script>
     <script src="assets/js/test.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
     var t = 10;
     $(".time").html(t);
+    var countDown = null;
     clss = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'one_a', 'two_a', 'three_a', 'four_a', 'five_a', 'six_a', 'seven_a', 'eight_a', 'nine_a', 'ten_a'];
-    // 随机头像
+    // 圆圈初如化
     var sc = null;
     document.getElementById("inner").innerHTML = '';
     sc = new Screen('inner', {
@@ -237,29 +248,56 @@
         diameter: 50
     });
     sc.initialize();
+    // end
     $('.start').on('click', function() {
-        document.getElementById("inner").innerHTML = '';
-        sc = new Screen('inner', {
-            ballsnum: 20,
-            spring: 0.3,
-            bounce: -0.9,
-            gravity: 0.01,
-            diameter: 50
+        if (!$(this).hasClass('active')) {
+            clearInterval(countDown);
+            // 创建圆圈DOM
+            document.getElementById("inner").innerHTML = '';
+            sc = new Screen('inner', {
+                ballsnum: 20,
+                spring: 0.3,
+                bounce: -0.9,
+                gravity: 0.01,
+                diameter: 50
+            });
+            // 倒计时
+            sc.initialize();
+            t = 10;
+            $(".time").html(t);
+            countDown = setInterval(function() {
+                    if (0 == t) {
+                        clearInterval(sc.timer);
+                        $('.start').removeClass('active')
+                    } else {
+                        t --;
+                        $(".time").html(t)
+                    }
+                },
+                970);
+            $(this).addClass('active')
+        }
+    });
+    $('.prize').on('click', function() {
+        layer.open({
+            type: 1,
+            closeBtn: 0, //不显示关闭按钮
+            title: false,
+            anim: 1,
+            shadeClose: true, //开启遮罩关闭
+            content: '奖品展示'
         });
-        sc.initialize();
-        setInterval(function() {
-                if (0 == t) {
-                    clearInterval(sc.timer);
-                    $('.ranking-box').css({
-                        display: 'block'
-                    }).addClass('zoomInDown animated5')
-                } else {
-                    t -= 1;
-                    $(".time").html(t)
-                }
-            },
-            970);
-    })
+    });
+    $('.record').on('click', function() {
+        layer.open({
+            type: 1,
+            closeBtn: 0, //不显示关闭按钮
+            title: false,
+            anim: 1,
+            shadeClose: true, //开启遮罩关闭
+            content: '获奖名单'
+        });
+    });
     </script>
 </body>
 
