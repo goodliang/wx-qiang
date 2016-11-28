@@ -7,7 +7,7 @@ var extend = function(des, src) {
     }
     return des;
 }
-var clss = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten','one_a', 'two_a', 'three_a', 'four_a', 'five_a', 'six_a', 'seven_a', 'eight_a', 'nine_a', 'ten_a'];
+var clss = null;
 var Ball = function(diameter, classn) {
     var ball = document.createElement("div");
     ball.className = classn;

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.min.css">
     <style type="text/css" media="screen">
     * {
         margin: 0;
@@ -170,6 +171,116 @@
         background: rgba(255, 255, 255, 0.2);
         box-shadow: 0 0 5px #ccc;
     }
+    
+    .ranking-box {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        margin-top: -123px;
+        text-align: center;
+        display: none;
+    }
+    
+    .ranking-box img {
+        width: 100%;
+    }
+    
+    .ranking-box .bk {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    .ranking-box .head {
+        display: inline-block;
+    }
+    
+    .ranking-box .text {
+        text-align: center;
+        color: #6e0485;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+    }
+    
+    .ranking1 .bk {
+        background: url('assets/img/one.png');
+        width: 209px;
+        height: 246px;
+    }
+    
+    .ranking2 .bk {
+        background: url('assets/img/two.png');
+        width: 160px;
+        height: 195px;
+    }
+    
+    .ranking3 .bk {
+        background: url('assets/img/three.png');
+        width: 150px;
+        height: 165px;
+    }
+    
+    .ranking1 {
+        width: 209px;
+        height: 246px;
+        display: inline-block;
+        margin: 0 50px;
+        position: relative;
+    }
+    
+    .ranking2 {
+        width: 160px;
+        height: 195px;
+        display: inline-block;
+        position: relative;
+    }
+    
+    .ranking3 {
+        width: 150px;
+        height: 165px;
+        display: inline-block;
+        position: relative;
+    }
+    
+    .ranking1 .head {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    .ranking2 .head {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    .ranking3 .head {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    .ranking1 .head {
+        border: 8px solid #ffea25;
+        box-shadow: 0 0 10px #ffea25;
+        margin-top: 50px;
+    }
+    
+    .ranking2 .head {
+        border: 8px solid #d1d8d3;
+        box-shadow: 0 0 10px #d1d8d3;
+        margin-top: 40px;
+    }
+    
+    .ranking3 .head {
+        border: 8px solid #ffba25;
+        box-shadow: 0 0 10px #ffba25;
+        margin-top: 25px;
+    }
     </style>
 </head>
 
@@ -210,6 +321,23 @@
                 <div class="nine_a"></div>
                 <div class="ten_a"></div>
             </div>
+            <div class="ranking-box">
+                <div class="ranking2">
+                    <div class="head"><img src="assets/img/2.jpg" alt=""></div>
+                    <div class="bk"></div>
+                    <p class="text">Lee</p>
+                </div>
+                <div class="ranking1">
+                    <div class="head"><img src="assets/img/1.jpg" alt=""></div>
+                    <div class="bk"></div>
+                    <p class="text">﹏颜汐ぐ</p>
+                </div>
+                <div class="ranking3">
+                    <div class="head"><img src="assets/img/3.jpg" alt=""></div>
+                    <div class="bk"></div>
+                    <p class="text">jame</p>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Javascript -->
@@ -217,71 +345,40 @@
     <script src="assets/js/test.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-    var t = 15;
+    var t = 5;
     $(".time").html(t);
-
+    clss = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten','one_a', 'two_a', 'three_a', 'four_a', 'five_a', 'six_a', 'seven_a', 'eight_a', 'nine_a', 'ten_a']
     // 随机头像
     var sc = null;
     document.getElementById("inner").innerHTML = '';
     sc = new Screen('inner', {
-        ballsnum: 20,
+        ballsnum: 10,
         spring: 0.3,
         bounce: -0.9,
         gravity: 0.01
     });
     sc.initialize();
     $('#start').on('click', function() {
-            document.getElementById("inner").innerHTML = '';
-            sc = new Screen('inner', {
-                ballsnum: 20,
-                spring: 0.3,
-                bounce: -0.9,
-                gravity: 0.01
-            });
-            sc.initialize();
-            setInterval(function() {
-                    if (0 == t) {
-                        clearInterval(sc.timer);
-                        clearInterval(zoomTimer);
-                    } else {
-                        t -= 1;
-                        $(".time").html(t)
-                    }
-                },
-                970);
-            // $('#inner>div').css({
-            //     zoom: 1
-            // });
-            // var num = 0
-            // var zoomTimer = setInterval(function() {
-            //     $('#inner>div').each(function() {
-            //         var zooms = parseInt($(this).css('zoom'))
-            //         var math =  Math.random() / 700
-            //         num += math
-            //         n = zooms +num
-            //         $(this).animate({
-            //             zoom: n
-            //         });
-            //         console.log(n);
-            //     })
-
-            // }, 1000);
-            $('#inner .one').animate({
-                width:'150px',
-                height:'150px'
-            },15000,function(){
-                $('#inner .one').append()
-            });
-            $('#inner .two').animate({
-                width:'130px',
-                height:'130px'
-            },15000);
-            $('#inner .three').animate({
-                width:'115px',
-                height:'115px'
-            },15000);
-        })
-        // clearInterval(sc.timer);
+        document.getElementById("inner").innerHTML = '';
+        sc = new Screen('inner', {
+            ballsnum: 10,
+            spring: 0.3,
+            bounce: -0.9,
+            gravity: 0.01
+        });
+        sc.initialize();
+        setInterval(function() {
+                if (0 == t) {
+                    clearInterval(sc.timer);
+                    // clearInterval(zoomTimer);
+                    $('.ranking-box').css({display:'block'}).addClass('zoomInDown animated5')
+                } else {
+                    t -= 1;
+                    $(".time").html(t)
+                }
+            },
+            970);
+    })
     </script>
 </body>
 
