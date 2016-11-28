@@ -77,7 +77,7 @@
     #inner {
         position: absolute;
         width: 100%;
-        height: calc(100% - 60px);
+        height: calc(100% - 68px);
     }
     
     #inner>div {
@@ -89,6 +89,7 @@
     
     .time-box {
         text-align: center;
+        margin-top: -20px;
     }
     
     .time-box .time {
@@ -96,10 +97,10 @@
         width: 198px;
         height: 196px;
         line-height: 196px;
-        font-size: 60px;
+        font-size: 70px;
         text-align: center;
         display: inline-block;
-        background: url('assets/img/time-bg.png') 7px 0;
+        background: url('assets/img/time-bg.png') 5px 0;
     }
     
     .selcet-box {
@@ -115,28 +116,31 @@
         font-size: 18px;
     }
     
-    #start {
+    .start {
         width: 249px;
         height: 38px;
         background: url('assets/img/btn01.png');
         display: inline-block;
         margin-left: 15px;
+        cursor: pointer;
     }
     
-    #prize {
+    .prize {
         width: 132px;
         height: 38px;
         background: url('assets/img/btn02.png');
         display: inline-block;
         margin-left: 15px;
+        cursor: pointer;
     }
     
-    #record {
+    .record {
         width: 132px;
         height: 38px;
         background: url('assets/img/btn03.png');
         display: inline-block;
         margin-left: 15px;
+        cursor: pointer;
     }
     
     .number-area {
@@ -207,9 +211,9 @@
                 <div class="number-area">
                     <strong>人数：</strong><em>10人</em>
                 </div>
-                <a href="javascript:;" id="start"></a>
-                <a href="javascript:;" id="prize"></a>
-                <a href="javascript:;" id="record"></a>
+                <div class="start"></div>
+                <div class="prize"></div>
+                <div class="record"></div>
             </div>
         </div>
     </div>
@@ -219,7 +223,7 @@
     <script src="assets/js/test.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-    var t = 5;
+    var t = 10;
     $(".time").html(t);
     clss = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'one_a', 'two_a', 'three_a', 'four_a', 'five_a', 'six_a', 'seven_a', 'eight_a', 'nine_a', 'ten_a'];
     // 随机头像
@@ -233,7 +237,7 @@
         diameter: 50
     });
     sc.initialize();
-    $('#start').on('click', function() {
+    $('.start').on('click', function() {
         document.getElementById("inner").innerHTML = '';
         sc = new Screen('inner', {
             ballsnum: 20,
