@@ -211,11 +211,11 @@
             <div class="selcet-box">
                 <div class="selcet-area">
                     <strong>奖品：</strong>
-                    <select class="form-control">
-                        <option>特等奖</option>
-                        <option>一等奖</option>
-                        <option>二等奖</option>
-                        <option>三等奖</option>
+                    <select class="form-control" id="prize-select">
+                        <option value="11">特等奖</option>
+                        <option value="22">一等奖</option>
+                        <option value="33">二等奖</option>
+                        <option value="44">三等奖</option>
                     </select>
                 </div>
                 <div class="number-area">
@@ -250,8 +250,9 @@
     sc.initialize();
     // end
     $('.start').on('click', function() {
+
         if (!$(this).hasClass('active')) {
-            clearInterval(countDown);
+            //$('#prize-select').val()
             // 创建圆圈DOM
             document.getElementById("inner").innerHTML = '';
             sc = new Screen('inner', {
@@ -268,9 +269,18 @@
             countDown = setInterval(function() {
                     if (0 == t) {
                         clearInterval(sc.timer);
-                        $('.start').removeClass('active')
+                        clearInterval(countDown);
+                        $('.start').removeClass('active');
+                        layer.open({
+                            type: 1,
+                            closeBtn: 0, //不显示关闭按钮
+                            title: false,
+                            anim: 1,
+                            shadeClose: true, //开启遮罩关闭
+                            content: '获奖名单'
+                        });
                     } else {
-                        t --;
+                        t--;
                         $(".time").html(t)
                     }
                 },
