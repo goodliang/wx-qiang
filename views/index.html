@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>会鸽互娱抽奖演示</title>
+    <title>会鸽互娱抽奖</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -77,73 +77,14 @@
     #inner {
         position: absolute;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 60px);
     }
     
     #inner>div {
         border-radius: 50%;
         overflow: hidden;
-        border: 3px solid #2a66a6;
-    }
-    
-    .one,
-    .one_a {
-        background: url('assets/img/1.jpg') no-repeat;
-        background-size: 100% auto;
-    }
-    
-    .two,
-    .two_a {
-        background: url('assets/img/2.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .three,
-    .three_a {
-        background: url('assets/img/3.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .four,
-    .four_a {
-        background: url('assets/img/4.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .five,
-    .five_a {
-        background: url('assets/img/5.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .six,
-    .six_a {
-        background: url('assets/img/6.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .seven,
-    .seven_a {
-        background: url('assets/img/7.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .eight,
-    .eight_a {
-        background: url('assets/img/8.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .nine,
-    .nine_a {
-        background: url('assets/img/9.jpg') no-repeat;
-        background-size: auto 100%;
-    }
-    
-    .ten,
-    .ten_a {
-        background: url('assets/img/10.jpg') no-repeat;
-        background-size: auto 100%;
+        border: 2px solid #a7d1e5;
+        box-shadow: 0 0 5px #ccc;
     }
     
     .time-box {
@@ -161,125 +102,83 @@
         background: url('assets/img/time-bg.png') 7px 0;
     }
     
-    #start {
-        color: #e6eff0;
-        font-size: 30px;
-        display: inline-block;
-        border: 3px solid #6ac0f5;
-        border-radius: 5px;
-        padding: 5px 20px;
-        background: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 0 5px #ccc;
-    }
-    
-    .ranking-box {
+    .selcet-box {
         position: absolute;
-        width: 100%;
-        top: 50%;
-        margin-top: -123px;
-        text-align: center;
-        display: none;
-    }
-    
-    .ranking-box img {
-        width: 100%;
-    }
-    
-    .ranking-box .bk {
-        position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
-    }
-    
-    .ranking-box .head {
-        display: inline-block;
-    }
-    
-    .ranking-box .text {
-        text-align: center;
-        color: #6e0485;
-        position: absolute;
-        bottom: 10px;
         width: 100%;
+        text-align: center;
+        color: #fff;
+        padding: 11px 0;
+        box-shadow: 0 0 10px #ccc;
+        vertical-align: middle;
+        font-size: 18px;
     }
     
-    .ranking1 .bk {
-        background: url('assets/img/one.png');
-        width: 209px;
-        height: 246px;
-    }
-    
-    .ranking2 .bk {
-        background: url('assets/img/two.png');
-        width: 160px;
-        height: 195px;
-    }
-    
-    .ranking3 .bk {
-        background: url('assets/img/three.png');
-        width: 150px;
-        height: 165px;
-    }
-    
-    .ranking1 {
-        width: 209px;
-        height: 246px;
+    #start {
+        width: 249px;
+        height: 38px;
+        background: url('assets/img/btn01.png');
         display: inline-block;
-        margin: 0 50px;
-        position: relative;
+        margin-left: 15px;
     }
     
-    .ranking2 {
-        width: 160px;
-        height: 195px;
+    #prize {
+        width: 132px;
+        height: 38px;
+        background: url('assets/img/btn02.png');
         display: inline-block;
-        position: relative;
+        margin-left: 15px;
     }
     
-    .ranking3 {
-        width: 150px;
-        height: 165px;
+    #record {
+        width: 132px;
+        height: 38px;
+        background: url('assets/img/btn03.png');
         display: inline-block;
-        position: relative;
+        margin-left: 15px;
     }
     
-    .ranking1 .head {
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
+    .number-area {
+        display: inline-block;
         overflow: hidden;
+        height: 38px;
+        line-height: 38px;
+        margin-left: 15px;
     }
     
-    .ranking2 .head {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        overflow: hidden;
+    .number-area em {
+        font-style: normal;
+        display: inline-block;
+        height: 38px;
+        padding: 0 20px;
+        border-radius: 3px;
+        background: #fff;
+        color: #333;
     }
     
-    .ranking3 .head {
-        width: 110px;
-        height: 110px;
-        border-radius: 50%;
-        overflow: hidden;
+    .selcet-area {
+        display: inline-block;
+        vertical-align: top;
     }
     
-    .ranking1 .head {
-        border: 8px solid #ffea25;
-        box-shadow: 0 0 10px #ffea25;
-        margin-top: 50px;
-    }
-    
-    .ranking2 .head {
-        border: 8px solid #d1d8d3;
-        box-shadow: 0 0 10px #d1d8d3;
-        margin-top: 40px;
-    }
-    
-    .ranking3 .head {
-        border: 8px solid #ffba25;
-        box-shadow: 0 0 10px #ffba25;
-        margin-top: 25px;
+    .form-control {
+        display: inline-block;
+        min-width: 150px;
+        height: 38px;
+        padding: 6px 12px;
+        font-size: 18px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
     </style>
 </head>
@@ -288,90 +187,68 @@
     <div class="hg-logo">
         <img src="assets/img/hg.png" alt="">
     </div>
-    <div class="ht-logo">
-        <img src="assets/img/ht.png" alt="">
-    </div>
     <div class="time-box">
-        <div id="start">
-            start
-        </div>
         <div class="time"></div>
     </div>
     <div class="container">
         <div class="pic-box" id="screen">
             <div id="inner">
-                <div class="one"></div>
-                <div class="two"></div>
-                <div class="three"></div>
-                <div class="four"></div>
-                <div class="five"></div>
-                <div class="six"></div>
-                <div class="seven"></div>
-                <div class="eight"></div>
-                <div class="nine"></div>
-                <div class="ten"></div>
-                <div class="one_a"></div>
-                <div class="two_a"></div>
-                <div class="three_a"></div>
-                <div class="four_a"></div>
-                <div class="five_a"></div>
-                <div class="six_a"></div>
-                <div class="seven_a"></div>
-                <div class="eight_a"></div>
-                <div class="nine_a"></div>
-                <div class="ten_a"></div>
             </div>
-            <div class="ranking-box">
-                <div class="ranking2">
-                    <div class="head"><img src="assets/img/2.jpg" alt=""></div>
-                    <div class="bk"></div>
-                    <p class="text">Lee</p>
+            <div class="selcet-box">
+                <div class="selcet-area">
+                    <strong>奖品：</strong>
+                    <select class="form-control">
+                        <option>特等奖</option>
+                        <option>一等奖</option>
+                        <option>二等奖</option>
+                        <option>三等奖</option>
+                    </select>
                 </div>
-                <div class="ranking1">
-                    <div class="head"><img src="assets/img/1.jpg" alt=""></div>
-                    <div class="bk"></div>
-                    <p class="text">﹏颜汐ぐ</p>
+                <div class="number-area">
+                    <strong>人数：</strong><em>10人</em>
                 </div>
-                <div class="ranking3">
-                    <div class="head"><img src="assets/img/3.jpg" alt=""></div>
-                    <div class="bk"></div>
-                    <p class="text">jame</p>
-                </div>
+                <a href="javascript:;" id="start"></a>
+                <a href="javascript:;" id="prize"></a>
+                <a href="javascript:;" id="record"></a>
             </div>
         </div>
     </div>
     <!-- Javascript -->
     <script src="assets/js/jquery-1.8.2.min.js"></script>
+    <script src="http://www.eventown.com/js/layer.js" type="text/javascript"></script>
     <script src="assets/js/test.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
     var t = 5;
     $(".time").html(t);
-    clss = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten','one_a', 'two_a', 'three_a', 'four_a', 'five_a', 'six_a', 'seven_a', 'eight_a', 'nine_a', 'ten_a']
+    clss = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'one_a', 'two_a', 'three_a', 'four_a', 'five_a', 'six_a', 'seven_a', 'eight_a', 'nine_a', 'ten_a'];
     // 随机头像
     var sc = null;
     document.getElementById("inner").innerHTML = '';
     sc = new Screen('inner', {
-        ballsnum: 10,
+        ballsnum: 20,
         spring: 0.3,
         bounce: -0.9,
-        gravity: 0.01
+        gravity: 0.01,
+        diameter: 50
     });
     sc.initialize();
     $('#start').on('click', function() {
         document.getElementById("inner").innerHTML = '';
         sc = new Screen('inner', {
-            ballsnum: 10,
+            ballsnum: 20,
             spring: 0.3,
             bounce: -0.9,
-            gravity: 0.01
+            gravity: 0.01,
+            diameter: 50
         });
         sc.initialize();
         setInterval(function() {
                 if (0 == t) {
                     clearInterval(sc.timer);
-                    // clearInterval(zoomTimer);
-                    $('.ranking-box').css({display:'block'}).addClass('zoomInDown animated5')
+                    $('.ranking-box').css({
+                        display: 'block'
+                    }).addClass('zoomInDown animated5')
                 } else {
                     t -= 1;
                     $(".time").html(t)

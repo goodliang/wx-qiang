@@ -7,7 +7,7 @@ var extend = function(des, src) {
     }
     return des;
 }
-var clss = null;
+var clss = [];
 var Ball = function(diameter, classn) {
     var ball = document.createElement("div");
     ball.className = classn;
@@ -26,7 +26,7 @@ var Screen = function(cid, config) {
     config = extend(Screen.Config, config) //configj是extend类的实例    self.container=getFlag(cid);            //窗口对象
     self.container = getFlag(cid);
     self.ballsnum = config.ballsnum;
-    self.diameter = 80; //球的直径
+    self.diameter =  config.diameter; //球的直径
     self.radius = self.diameter / 2;
     self.spring = config.spring; //球相碰后的反弹力
     self.bounce = config.bounce; //球碰到窗口边界后的反弹力
@@ -42,13 +42,14 @@ Screen.Config = { //为属性赋初值
     ballsnum: 10,
     spring: 0.8,
     bounce: -0.9,
-    gravity: 0.05
+    gravity: 0.05,
+    diameter: 50
 };
 Screen.prototype = {
     initialize: function() {
         var self = this;
         self.createBalls();
-        self.timer = setInterval(function() { self.hitBalls() }, 30)
+        self.timer = setInterval(function() { self.hitBalls() }, 20)
     },
     createBalls: function() {
         var self = this,
