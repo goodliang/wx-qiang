@@ -85,7 +85,7 @@ Screen.prototype = {
                 dy = ball2.y - ball1.y;
                 var dist = Math.sqrt(dx * dx + dy * dy); //两直角边求圆心距
                 var misDist = ball1.radius + ball2.radius; //圆心距最小值
-                if (dist < misDist) {
+                if (dist <= misDist) {
                     //假设碰撞后球会按原方向继续做一定的运动，将其定义为运动A   
                     var angle = Math.atan2(dy, dx);
                     //当刚好相碰，即dist=misDist时，tx=ballb.x, ty=ballb.y

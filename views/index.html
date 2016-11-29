@@ -183,23 +183,22 @@
     var sc = null;
     document.getElementById("inner").innerHTML = '';
     sc = new Screen('inner', {
-        ballsnum: 10,
+        ballsnum: 20,
         spring: 0.3,
         bounce: -0.9,
         gravity: 0.01,
-        diameter: 50
+        diameter: 40
     });
     sc.initialize();
     // end
     $('.start').on('click', function() {
-
         if (!$(this).hasClass('active')) {
             //$('#prize-select').val()
             // 创建圆圈DOM
             document.getElementById("inner").innerHTML = '';
             sc = new Screen('inner', {
-                ballsnum: 10,
-                spring: 0.3,
+                ballsnum: 20,
+                spring: 1,
                 bounce: -0.9,
                 gravity: 0.01,
                 diameter: 50
