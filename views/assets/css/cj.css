@@ -122,6 +122,9 @@ img {
     overflow: hidden;
     border: 2px solid #a7d1e5;
     box-shadow: 0 0 5px #ccc;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .time-box {

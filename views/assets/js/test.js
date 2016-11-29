@@ -8,12 +8,14 @@ var extend = function(des, src) {
     return des;
 }
 var clss = [];
-var Ball = function(diameter, classn) {
+var head = [];
+var Ball = function(diameter, classn, headPic) {
     var ball = document.createElement("div");
     ball.className = classn;
     with(ball.style) {
         width = height = diameter + 'px';
         position = 'absolute';
+        backgroundImage = 'url('+headPic+')';
     }
     return ball;
 }
@@ -56,7 +58,7 @@ Screen.prototype = {
             num = self.ballsnum;
         var frag = document.createDocumentFragment(); //创建文档碎片，避免多次刷新       
         for (i = 0; i < num; i++) {
-            var ball = new Ball(self.diameter, clss[i]);
+            var ball = new Ball(self.diameter, clss[i], head[i]);
             //var ball=new Ball(self.diameter,clss[ Math.floor(Math.random()* num )]);//这里是随机的10个小球的碰撞效果
             ball.diameter = self.diameter;
             ball.radius = self.radius;

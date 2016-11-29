@@ -52,3 +52,53 @@ var server = http.listen(8080, function() {
     var port = server.address().port;
     // console.log('Example app listening at http://%s:%s', host, port);
 })
+
+
+/* 定义模拟接口 */
+app.post('/user', function(req, res, next) {
+    res.json({
+        errorno: 0,
+        msg: "接口返回：提交成功",
+        data: [{
+            jobnumber: '6501',
+            name: '大佳',
+            headimgurl: 'assets/img/1.jpg'
+        }, {
+            jobnumber: '6502',
+            name: '小佳',
+            headimgurl: 'assets/img/2.jpg'
+        }, {
+            jobnumber: '6503',
+            name: '大姚',
+            headimgurl: 'assets/img/3.jpg'
+        }, {
+            jobnumber: '6504',
+            name: '小姚',
+            headimgurl: 'assets/img/4.jpg'
+        }, {
+            jobnumber: '6505',
+            name: '大欢',
+            headimgurl: 'assets/img/5.jpg'
+        }, {
+            jobnumber: '6506',
+            name: '二欢',
+            headimgurl: 'assets/img/6.jpg'
+        }, {
+            jobnumber: '6506',
+            name: '大二',
+            headimgurl: 'assets/img/7.jpg'
+        }, {
+            jobnumber: '6506',
+            name: '小二',
+            headimgurl: 'assets/img/8.jpg'
+        }, {
+            jobnumber: '6506',
+            name: '大飞',
+            headimgurl: 'assets/img/9.jpg'
+        }, {
+            jobnumber: '6506',
+            name: '小飞',
+            headimgurl: 'assets/img/10.jpg'
+        }]
+    });
+});

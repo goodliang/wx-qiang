@@ -178,18 +178,27 @@
     var t = 5;
     $(".time").html(t);
     var countDown = null;
-    clss = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'one_a', 'two_a', 'three_a', 'four_a', 'five_a', 'six_a', 'seven_a', 'eight_a', 'nine_a', 'ten_a'];
-    // 圆圈初如化
-    var sc = null;
-    document.getElementById("inner").innerHTML = '';
-    sc = new Screen('inner', {
-        ballsnum: 20,
-        spring: 0.3,
-        bounce: -0.9,
-        gravity: 0.01,
-        diameter: 40
-    });
-    sc.initialize();
+    // var aUser = [];
+    // ajax
+    $.post('/user', function(data) {
+        var val = data.data;
+        $.each(val, function(k, v) {
+            clss.push(v.jobnumber);
+            head.push(v.headimgurl)
+        });
+        // 圆圈初如化
+        var sc = null;
+        document.getElementById("inner").innerHTML = '';
+        sc = new Screen('inner', {
+            ballsnum: val.length,
+            spring: 0.3,
+            bounce: -0.9,
+            gravity: 0.01,
+            diameter: 40
+        });
+        sc.initialize();
+    })
+
     // end
     $('.start').on('click', function() {
         if (!$(this).hasClass('active')) {
