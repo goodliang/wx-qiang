@@ -178,15 +178,19 @@
     var t = 5;
     $(".time").html(t);
     var countDown = null;
-    // var aUser = [];
+    var aUser = [];
     // ajax
     $.post('/user', function(data) {
         var val = data.data;
         $.each(val, function(k, v) {
             clss.push(v.jobnumber);
             head.push(v.headimgurl)
+            aUser.push(v)
         });
-        // 圆圈初如化
+        createItem(aUser)
+    });
+    // 圆圈初始化
+    function createItem(val) {
         var sc = null;
         document.getElementById("inner").innerHTML = '';
         sc = new Screen('inner', {
@@ -197,16 +201,17 @@
             diameter: 40
         });
         sc.initialize();
-    })
-
+    }
     // end
     $('.start').on('click', function() {
         if (!$(this).hasClass('active')) {
+            var randomNum = random(aUser, 5); //随机数
+                    console.log(randomNum);
             //$('#prize-select').val()
             // 创建圆圈DOM
             document.getElementById("inner").innerHTML = '';
             sc = new Screen('inner', {
-                ballsnum: 20,
+                ballsnum: aUser.length,
                 spring: 1,
                 bounce: -0.9,
                 gravity: 0.01,
@@ -222,26 +227,35 @@
                         clearInterval(countDown);
                         $('.start').removeClass('active');
                         layer.closeAll()
-                        layer.open({
-                            type: 1,
-                            closeBtn: 0, //不显示关闭按钮
-                            title: false,
-                            area: ['520px', 'auto'],
-                            anim: 1,
-                            shade: 0.6,
-                            shadeClose: true, //开启遮罩关闭
-                            content: $('.winning-layer-wrap')
-                        });
+                        fnLayer($('.winning-layer-wrap'))
                     } else {
                         t--;
                         $(".time").html(t)
                     }
                 },
                 970);
-            $(this).addClass('active')
+            $(this).addClass('active');
+            // aUser.splice(randomNum, 1)
         }
     });
     $('.prize').on('click', function() {
+        fnLayer($('.prize-layer-wrap'))
+    });
+    $('.record').on('click', function() {
+        fnLayer($('.record-layer-wrap'))
+    });
+    // 随机数
+    function random(arr,num) {
+        // return parseInt(Math.random() * (max + 1));
+        arr.sort(
+            function() {
+                return 0.5 - Math.random();
+            }
+        );
+        arr.lenth = 1;
+    }
+    // 弹层
+    function fnLayer(el) {
         layer.open({
             type: 1,
             closeBtn: 0, //不显示关闭按钮
@@ -250,21 +264,18 @@
             anim: 1,
             shade: 0.6,
             shadeClose: true, //开启遮罩关闭
-            content: $('.prize-layer-wrap')
+            content: el
         });
-    });
-    $('.record').on('click', function() {
-        layer.open({
-            type: 1,
-            closeBtn: 0, //不显示关闭按钮
-            title: false,
-            area: ['520px', '600px'],
-            anim: 1,
-            shade: 0.6,
-            shadeClose: true, //开启遮罩关闭
-            content: $('.record-layer-wrap')
-        });
-    });
+    }
+    // 中奖名单
+    // function() {
+    //     $('.winning-layer table')
+    // }
+    // 遍历表格
+    // function fnTable(el) {
+
+    // }
+    // fnTable($('.winning-layer table'))
     </script>
 </body>
 
