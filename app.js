@@ -84,19 +84,19 @@ app.post('/user', function(req, res, next) {
             name: '二欢',
             headimgurl: 'assets/img/6.jpg'
         }, {
-            jobnumber: '6506',
+            jobnumber: '6507',
             name: '大二',
             headimgurl: 'assets/img/7.jpg'
         }, {
-            jobnumber: '6506',
+            jobnumber: '6508',
             name: '小二',
             headimgurl: 'assets/img/8.jpg'
         }, {
-            jobnumber: '6506',
+            jobnumber: '6509',
             name: '大飞',
             headimgurl: 'assets/img/9.jpg'
         }, {
-            jobnumber: '6506',
+            jobnumber: '6510',
             name: '小飞',
             headimgurl: 'assets/img/10.jpg'
         }]

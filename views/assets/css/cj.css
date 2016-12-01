@@ -200,14 +200,17 @@ img {
     margin-left: 15px;
 }
 
-.number-area em {
-    font-style: normal;
+.number-area span {
     display: inline-block;
     height: 38px;
     padding: 0 20px;
     border-radius: 3px;
     background: #fff;
     color: #333;
+}
+
+.number-area span em {
+    font-style: normal;
 }
 
 .selcet-area {
@@ -334,4 +337,8 @@ img {
     padding: 10px;
     color: #333;
     border-bottom: 2px solid #e1e1e1;
+}
+
+.layui-layer-hui {
+    display: block !important;
 }

@@ -33,7 +33,7 @@
                     </select>
                 </div>
                 <div class="number-area">
-                    <strong>人数：</strong><em>10人</em>
+                    <strong>人数：</strong><span><em id="outnumber">2</em>人</span>
                 </div>
                 <div class="start"></div>
                 <div class="prize"></div>
@@ -90,11 +90,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><img src="assets/img/7.jpg" class="head"></td>
-                                <td>大佳</td>
-                                <td>12453</td>
-                            </tr>
                         </tbody>
                     </table>
                     <table class="table">
@@ -177,25 +172,26 @@
     <script type="text/javascript">
     var t = 5;
     $(".time").html(t);
-    var countDown = null;
-    var aUser = [];
+    var countDown = null; //倒计时
+    var aUser = null; //用户数据
+    var winnersNum = [] //中奖用户
+    var sc = null;
     // ajax
+
     $.post('/user', function(data) {
-        var val = data.data;
+        aUser = data.data;
+        createItem(aUser, 0.6)
+    });
+    // 圆圈初始化
+    function createItem(val, speed) {
         $.each(val, function(k, v) {
             clss.push(v.jobnumber);
             head.push(v.headimgurl)
-            aUser.push(v)
         });
-        createItem(aUser)
-    });
-    // 圆圈初始化
-    function createItem(val) {
-        var sc = null;
         document.getElementById("inner").innerHTML = '';
         sc = new Screen('inner', {
             ballsnum: val.length,
-            spring: 0.3,
+            spring: speed,
             bounce: -0.9,
             gravity: 0.01,
             diameter: 40
@@ -205,20 +201,18 @@
     // end
     $('.start').on('click', function() {
         if (!$(this).hasClass('active')) {
-            var randomNum = random(aUser, 5); //随机数
-                    console.log(randomNum);
-            //$('#prize-select').val()
+            if ($('#prize-select option:selected').attr('disabled')) {
+                layer.msg('你已经抽过此等奖项了~！');
+                return
+            }
+            var title = $('#prize-select option:selected').val()
+            var outnumber = Number($('#outnumber').html())
+            if (winnersNum.length) {
+                aUser.splice(0, 2)
+            }
             // 创建圆圈DOM
-            document.getElementById("inner").innerHTML = '';
-            sc = new Screen('inner', {
-                ballsnum: aUser.length,
-                spring: 1,
-                bounce: -0.9,
-                gravity: 0.01,
-                diameter: 50
-            });
+            createItem(aUser, 1);
             // 倒计时
-            sc.initialize();
             t = 5;
             $(".time").html(t);
             countDown = setInterval(function() {
@@ -234,8 +228,10 @@
                     }
                 },
                 970);
+            $('#prize-select option:selected').attr('disabled', 'disabled')
             $(this).addClass('active');
-            // aUser.splice(randomNum, 1)
+            random(aUser, outnumber); // 中奖数据
+            createWinning(winnersNum, title, outnumber) //渲染中奖名单
         }
     });
     $('.prize').on('click', function() {
@@ -245,14 +241,17 @@
         fnLayer($('.record-layer-wrap'))
     });
     // 随机数
-    function random(arr,num) {
+    function random(arr, num) {
         // return parseInt(Math.random() * (max + 1));
+        winnersNum = []
         arr.sort(
             function() {
                 return 0.5 - Math.random();
             }
         );
-        arr.lenth = 1;
+        for (var i = 0; i < num; i++) {
+            winnersNum.push(arr[i])
+        }
     }
     // 弹层
     function fnLayer(el) {
@@ -268,9 +267,16 @@
         });
     }
     // 中奖名单
-    // function() {
-    //     $('.winning-layer table')
-    // }
+    function createWinning(data, tit, num) {
+        var td = null
+        $('.winning-layer table tbody').html('');
+        $('.winning-layer table caption strong').html(tit)
+        $('.winning-layer table caption span').html(num)
+        $.each(data, function(k, v) {
+            td += '<tr><td><img src=' + v.headimgurl + ' class="head"></td><td>' + v.name + '</td><td>' + v.jobnumber + '</td></tr>'
+        });
+        $('.winning-layer table tbody').append(td)
+    }
     // 遍历表格
     // function fnTable(el) {
 
