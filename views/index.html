@@ -158,11 +158,11 @@
             option += '<option value=' + v.id + ' num =' + v.vcount + ' lucknums =' + v.lucknums + ' text=' + v.item + ' pic=' + v.startpicurl + '>' + v.rank + ' </option>'
         });
         $('#prize-select').append(option);
-        $('#prize-select option').each(function() {
-            if ($(this).attr('num') == $(this).attr('lucknums')) {
-                $(this).attr('disabled', 'disabled');
-            }
-        })
+        // $('#prize-select option').each(function() {
+        //     if ($(this).attr('num') == $(this).attr('lucknums')) {
+        //         $(this).attr('disabled', 'disabled');
+        //     }
+        // })
         tabAward()
         createRecord(award)
     }
@@ -186,12 +186,13 @@
             //     });
             //     return
             // }
-            console.log(aAward);
-            var title = $('#prize-select option:selected').text()
-            var outnumber = Number($('#outnumber').html())
+            var title = $('#prize-select option:selected').text();
+            var awardId = $('#prize-select option:selected').val();
+            var outnumber = Number($('#outnumber').html());
             if (winnersNum.length) {
                 aUser.splice(0, winnersNum.length)
             }
+            userRecord(awardId) // 此处应有掌声
             createItem(aUser, 1); // 创建圆圈DOM
             random(aUser, outnumber); // 中奖数据
             table.title = title;
@@ -252,6 +253,15 @@
         for (var i = 0; i < num; i++) {
             winnersNum.push(arr[i])
         }
+    }
+    // 此处莫须有
+    function userRecord(_num){
+
+        $.each(aAward, function(k, v) {
+            if(_num == v.id){
+                console.log(v.jos);
+            }
+        });
     }
     // 弹层
     function fnLayer(el) {
