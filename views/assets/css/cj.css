@@ -240,7 +240,7 @@ img {
 
 /*弹层*/
 
-.layui-layer {
+.bg-none {
     background: none !important;
 }
 
@@ -339,6 +339,4 @@ img {
     border-bottom: 2px solid #e1e1e1;
 }
 
-.layui-layer-hui {
-    display: block !important;
-}
+

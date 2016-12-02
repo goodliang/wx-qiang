@@ -102,3 +102,42 @@ var server = http.listen(8080, function() {
 //         }]
 //     });
 // });
+// app.post('/award', function(req, res, next) {
+//     res.json({
+//         errorno: 0,
+//         msg: "接口返回：提交成功",
+//         data: [{
+//             tit: '二等奖',
+//             num: 5,
+//             jos: [{
+//                 jobnumber: '6501',
+//                 name: '大佳',
+//                 headimgurl: 'assets/img/1.jpg'
+//             }, {
+//                 jobnumber: '6502',
+//                 name: '小佳',
+//                 headimgurl: 'assets/img/2.jpg'
+//             }, {
+//                 jobnumber: '6503',
+//                 name: '大姚',
+//                 headimgurl: 'assets/img/3.jpg'
+//             }]
+//         }, {
+//             tit: '二等奖',
+//             num: 5,
+//             jos: [{
+//                 jobnumber: '6501',
+//                 name: '大佳',
+//                 headimgurl: 'assets/img/1.jpg'
+//             }, {
+//                 jobnumber: '6502',
+//                 name: '小佳',
+//                 headimgurl: 'assets/img/2.jpg'
+//             }, {
+//                 jobnumber: '6503',
+//                 name: '大姚',
+//                 headimgurl: 'assets/img/3.jpg'
+//             }]
+//         }]
+//     });
+// });
