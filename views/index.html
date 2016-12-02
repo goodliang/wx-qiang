@@ -124,6 +124,7 @@
     var aUser = null; //用户数据
     var aAward = null;
     var winnersNum = [] //中奖用户
+    var recordData = null //呵呵用户
     var sc = null;
     // ajax
     $.get('http://wx.eventown.com/index.php?g=Wap&m=Api&a=get_bubble&id=6&token=ooeczw1478152701', function(data) {
@@ -158,15 +159,15 @@
             option += '<option value=' + v.id + ' num =' + v.vcount + ' lucknums =' + v.lucknums + ' text=' + v.item + ' pic=' + v.startpicurl + '>' + v.rank + ' </option>'
         });
         $('#prize-select').append(option);
-        // $('#prize-select option').each(function() {
-        //     if ($(this).attr('num') == $(this).attr('lucknums')) {
-        //         $(this).attr('disabled', 'disabled');
-        //     }
-        // })
+        $('#prize-select option').each(function() {
+            if ($(this).attr('num') == $(this).attr('lucknums')) {
+                $(this).attr('disabled', 'disabled');
+            }
+        })
         tabAward()
         createRecord(award)
     }
-    
+
     function tabAward() {
         $('#outnumber').html($('#prize-select option:selected').attr('num'));
         $('#prize-name').html($('#prize-select option:selected').text());
@@ -180,21 +181,22 @@
     // 抽奖
     $('.start').on('click', function() {
         if (!$(this).hasClass('active')) {
-            // if ($('#prize-select option:selected').attr('disabled')) {
-            //     layer.msg('<h2>你已经抽过此等奖项了</h2>', {
-            //         icon: 5
-            //     });
-            //     return
-            // }
+            if ($('#prize-select option:selected').attr('disabled')) {
+                layer.msg('<h2>你已经抽过此等奖项了</h2>', {
+                    icon: 5
+                });
+                return
+            }
             var title = $('#prize-select option:selected').text();
             var awardId = $('#prize-select option:selected').val();
             var outnumber = Number($('#outnumber').html());
+            var lucknums =  outnumber - $('#prize-select option:selected').attr('lucknums');
             if (winnersNum.length) {
-                aUser.splice(0, winnersNum.length)
+                aUser.splice(0, lucknums)
             }
             userRecord(awardId) // 此处应有掌声
             createItem(aUser, 1); // 创建圆圈DOM
-            random(aUser, outnumber); // 中奖数据
+            random(aUser, lucknums, recordData); // 中奖数据
             table.title = title;
             table.outnumber = outnumber;
             table.people = winnersNum;
@@ -242,7 +244,7 @@
         fnLayer($('.record-layer-wrap'))
     });
     // 随机数
-    function random(arr, num) {
+    function random(arr, num, record) {
         // return parseInt(Math.random() * (max + 1));
         winnersNum = []
         arr.sort(
@@ -250,16 +252,20 @@
                 return 0.5 - Math.random();
             }
         );
+        // 随机数  
         for (var i = 0; i < num; i++) {
             winnersNum.push(arr[i])
         }
+        // 呵呵数
+        for (var i = 0; i < record.length; i++) {
+            winnersNum.push(record[i])
+        }
     }
     // 此处莫须有
-    function userRecord(_num){
-
+    function userRecord(_num) {
         $.each(aAward, function(k, v) {
-            if(_num == v.id){
-                console.log(v.jos);
+            if (_num == v.id) {
+                recordData = v.jos;
             }
         });
     }
