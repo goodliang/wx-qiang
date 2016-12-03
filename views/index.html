@@ -73,6 +73,7 @@
             <div class="layer-title"></div>
             <div class="layer-body">
                 <div class="layer-body-content">
+                    <!-- <h1 class="text-center">活动已过期</h1> -->
                     <div class="layer-body-title f20 text-center">获奖名单</div>
                     <table class="table" v-for="item in items" v-show="item.jos.length>0">
                         <caption>
@@ -128,11 +129,12 @@
     var sc = null;
     // ajax
     $.get('http://wx.eventown.com/index.php?g=Wap&m=Api&a=get_bubble&id=6&token=ooeczw1478152701', function(data) {
-        data.userList.length = 20
+        data.userList.length = 30
         aUser = data.userList;
         aAward = data.awardList
         createItem(aUser, 0.2);
-        createAward(aAward)
+        createAward(aAward);
+        console.log(aUser.length);
     });
     // 圆圈初始化
     function createItem(val, speed) {
@@ -163,9 +165,9 @@
             if ($(this).attr('num') == $(this).attr('lucknums')) {
                 $(this).attr('disabled', 'disabled');
             }
-        })
+        });
         tabAward()
-        createRecord(award)
+        createRecord(award);
     }
 
     function tabAward() {
@@ -190,9 +192,9 @@
             var title = $('#prize-select option:selected').text();
             var awardId = $('#prize-select option:selected').val();
             var outnumber = Number($('#outnumber').html());
-            var lucknums =  outnumber - $('#prize-select option:selected').attr('lucknums');
+            var lucknums = outnumber - $('#prize-select option:selected').attr('lucknums');
             if (winnersNum.length) {
-                aUser.splice(0, lucknums)
+                aUser.splice(0, aDel)
             }
             userRecord(awardId) // 此处应有掌声
             createItem(aUser, 1); // 创建圆圈DOM
@@ -246,6 +248,7 @@
     // 随机数
     function random(arr, num, record) {
         // return parseInt(Math.random() * (max + 1));
+        aDel = num
         winnersNum = []
         arr.sort(
             function() {
@@ -259,7 +262,8 @@
         // 呵呵数
         for (var i = 0; i < record.length; i++) {
             winnersNum.push(record[i])
-        }
+        };
+
     }
     // 此处莫须有
     function userRecord(_num) {
