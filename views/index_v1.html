@@ -8,6 +8,45 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="stylesheet" type="text/css" href="assets/css/cj.css">
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_b6enzokn73yaxlxr.css">
+    <style type="text/css" media="screen">
+    :-webkit-full-screen {
+        /* properties */
+    }
+    
+    :-moz-full-screen {
+        /* properties */
+    }
+    
+    :-ms-fullscreen {
+        /* properties */
+    }
+    
+    :full-screen {
+        /*pre-spec */
+        /* properties */
+    }
+    
+    :fullscreen {
+        /* spec */
+        /* properties */
+    }
+    /* deeper elements */
+    
+    :-webkit-full-screen video {
+        width: 100%;
+        height: 100%;
+    }
+    /* styling the backdrop*/
+    
+    ::backdrop {
+        /* properties */
+    }
+    
+    ::-ms-backdrop {
+        /* properties */
+    }
+    </style>
 </head>
 
 <body>
@@ -112,11 +151,22 @@
             <div class="layer-bottom"></div>
         </div>
     </div>
+    <!-- Javascript -->
+    <div class="fixed-nav-wrap">
+        <div class="fixed-nav-guide"><i class="iconfont">&#xe631;</i></div>
+        <div class="fixed-nav">
+            <a href="###"><i class="iconfont">&#xe604;</i><br><strong>弹幕</strong></a>
+            <a href="###"><i class="iconfont">&#xe61c;</i><br><strong>签到墙</strong></a>
+            <a href="###" class="active"><i class="iconfont">&#xe63d;</i><br><strong>抽奖</strong></a>
+            <a href="###"><i class="iconfont">&#xe7a3;</i><br><strong>摇一摇</strong></a>
+            <a href="###"><i class="iconfont">&#xe61d;</i><br><strong>水果机</strong></a>
+            <a href="###" id="fullScreen" state="open"><i class="iconfont">&#xe676;</i><br><strong>全屏</strong></a>
+        </div>
+    </div>
     <script src="assets/js/jquery-1.8.2.min.js"></script>
     <script src="assets/js/vue.js"></script>
     <script src="assets/js/layer/layer.js" type="text/javascript"></script>
     <script src="assets/js/index.js"></script>
-    <script src="assets/js/fullscreen.js"></script>
     <script type="text/javascript">
     var t = 5;
     $(".time").html(t);
@@ -220,20 +270,7 @@
                             if (data.errorno == 0) {
                                 $('#prize-select option:selected').attr('disabled', 'disabled');
                                 layer.closeAll()
-                                layer.open({
-                                    type: 1,
-                                    closeBtn: 0, //不显示关闭按钮
-                                    title: false,
-                                    skin: 'bg-none',
-                                    area: ['520px', 'auto'],
-                                    anim: 1,
-                                    shade: 0.6,
-                                    shadeClose: true, //开启遮罩关闭
-                                    content: $('.winning-layer-wrap'),
-                                    end: function() {
-                                        createItem(aUser, 0.2)
-                                    }
-                                });
+                                fnLayer($('.winning-layer-wrap'));
                                 $('#record-layer .layer-body-content').append($('#winning-layer table').clone())
                             } else {
                                 winnersNum = []
@@ -275,6 +312,16 @@
         for (var i = 0; i < record.length; i++) {
             winnersNum.push(record[i])
         };
+        // 飞出动画
+        // var _t = 0
+        // var tit = [144, 145, 146, 147, 148,147, 148, 149, 150, 151];
+        // setInterval(function() {
+        //     _t ++
+        //     $('.' + tit[_t]).css({
+        //         transform:'translate(2000px, 2000px)',
+        //         transition:'transform 2s ease-out'
+        //     })
+        // }, 500)
     }
     // 此处莫须有
     function userRecord(_num) {
@@ -295,7 +342,8 @@
             anim: 1,
             shade: 0.6,
             shadeClose: true, //开启遮罩关闭
-            content: el
+            content: el,
+            cancel: createItem(aUser, 0.2)
         });
     }
     // 当前中奖列表
@@ -316,9 +364,38 @@
             }
         })
     }
-    // 导航状态
-    var newScreen = new fullScreen(2);
-    newScreen.init()
+
+    // 全屏
+    function launchFullscreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    }
+
+    function exitFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }
+    $('#fullScreen').on('click', function() {
+        if ($(this).attr('state') === 'open') {
+            launchFullscreen(document.documentElement);
+            $(this).attr('state', 'close')
+        } else {
+            exitFullscreen();
+            $(this).attr('state', 'open')
+        }
+    })
     </script>
 </body>
 

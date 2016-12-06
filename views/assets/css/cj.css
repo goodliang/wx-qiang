@@ -11,6 +11,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body,
@@ -114,7 +115,7 @@ img {
 #inner {
     position: absolute;
     width: 100%;
-    /*overflow: hidden;*/
+    overflow: hidden;
     height: calc(100% - 68px);
 }
 
@@ -237,6 +238,8 @@ img {
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+
+#prize-select option[disabled="disabled"] {}
 
 
 /*弹层*/
