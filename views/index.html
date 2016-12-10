@@ -15,9 +15,9 @@
         <img src="assets/img/hg.png" alt="">
     </div>
     <div class="container">
-        <div class="time-box">
+        <!-- <div class="time-box">
             <div class="time"></div>
-        </div>
+        </div> -->
         <div class="pic-box" id="screen">
             <div id="inner">
             </div>
@@ -30,7 +30,12 @@
                 <div class="number-area">
                     <strong>人数：</strong><span><em id="outnumber">0</em>人</span>
                 </div>
-                <div class="start"></div>
+                <div class="btn-group">
+                    <div class="btn-ant">
+                        <div class="start"></div>
+                        <div class="stop"></div>
+                    </div>
+                </div>
                 <div class="prize"></div>
                 <div class="record"></div>
             </div>
@@ -118,9 +123,6 @@
     <script src="assets/js/index.js"></script>
     <script src="http://links.eventown.com.cn/js/fullscreen.js"></script>
     <script type="text/javascript">
-    var t = 5;
-    $(".time").html(t);
-    var countDown = null; //倒计时
     var aUser = null; //用户数据
     var aAward = null;
     var winnersNum = [] //中奖用户
@@ -131,13 +133,15 @@
         if (data.errorno == 0) {
             aUser = data.userList;
             aAward = data.awardList
+                // aUser.length = 40
             createItem(aUser, 0.2);
             createAward(aAward);
-            // if (data.data.background) {
-            //     $('body').css({
-            //         'background-image': 'url('+ data.data.background +')'
-            //     });
-            // }
+            document.title = data.data.title;
+            if (data.data.background) {
+                $('body').css({
+                    'background-image': 'url(' + data.data.background + ')'
+                });
+            }
         } else {
             layer.msg('<h2>数据加载失败</h2>');
         }
@@ -192,76 +196,71 @@
     });
     // 抽奖
     $('.start').on('click', function() {
-        if (!$(this).hasClass('active')) {
-            if ($('#prize-select option:selected').attr('disabled')) {
-                layer.msg('<h2>你已经抽过此等奖项了</h2>', {
+        if ($('#prize-select option:selected').attr('disabled')) {
+            layer.msg('<h2>你已经抽过此等奖项了</h2>', {
+                icon: 5
+            });
+            return
+        }
+        var title = $('#prize-select option:selected').text();
+        var awardId = $('#prize-select option:selected').val();
+        var outnumber = Number($('#outnumber').html());
+        var lucknums = outnumber - $('#prize-select option:selected').attr('lucknums');
+        if (winnersNum.length) {
+            aUser.splice(0, aDel)
+        }
+        userRecord(awardId) // 此处应有掌声
+        createItem(aUser, 2); // 创建圆圈DOM
+        random(aUser, lucknums, recordData); // 中奖数据
+        table.title = title;
+        table.outnumber = outnumber;
+        table.people = winnersNum;
+        // 发送中奖数据
+        sendWinners = {
+            vid: oVid,
+            id: $('#prize-select option:selected').val(),
+            data: winnersNum
+        };
+        $('.btn-ant').css({
+            webkitTransform: 'translateY(-38px)',
+            transform: 'translateY(-38px)'
+        }, 100);
+    });
+    $('.stop').on('click', function() {
+        clearInterval(sc.timer);
+        $('.btn-ant').css({
+            webkitTransform: 'translateY(0px)',
+            transform: 'translateY(0px)'
+        }, 100);
+        console.log(sendWinners.data.length);
+        $.post('http://wx.eventown.com/index.php?g=Wap&m=Api&a=push_bubble&id=6&token=ooeczw1478152701', sendWinners, function(data) {
+            data = eval("(" + data + ")");
+            if (data.errorno == 0) {
+                $('#prize-select option:selected').attr('disabled', 'disabled');
+                layer.closeAll();
+                layer.open({
+                    type: 1,
+                    closeBtn: 0, //不显示关闭按钮
+                    title: false,
+                    skin: 'bg-none',
+                    area: ['520px', 'auto'],
+                    anim: 1,
+                    shade: 0.6,
+                    shadeClose: true, //开启遮罩关闭
+                    content: $('.winning-layer-wrap'),
+                    end: function() {
+                        createItem(aUser, 0.2)
+                    }
+                });
+                $('#record-layer .layer-body-content').append($('#winning-layer table').clone())
+            } else {
+                winnersNum = []
+                layer.msg('<h2>抽奖失败了</h2>', {
                     icon: 5
                 });
-                return
             }
-            var title = $('#prize-select option:selected').text();
-            var awardId = $('#prize-select option:selected').val();
-            var outnumber = Number($('#outnumber').html());
-            var lucknums = outnumber - $('#prize-select option:selected').attr('lucknums');
-            if (winnersNum.length) {
-                aUser.splice(0, aDel)
-            }
-            userRecord(awardId) // 此处应有掌声
-            createItem(aUser, 2); // 创建圆圈DOM
-            random(aUser, lucknums, recordData); // 中奖数据
-            table.title = title;
-            table.outnumber = outnumber;
-            table.people = winnersNum;
-            // 发送中奖数据
-            var sendWinners = {
-                vid: oVid,
-                id: $('#prize-select option:selected').val(),
-                data: winnersNum
-            };
-            $(this).addClass('active');
-            // 倒计时
-            t = 5;
-            $(".time").html(t);
-            countDown = setInterval(function() {
-                    if (0 == t) {
-                        clearInterval(sc.timer);
-                        clearInterval(countDown);
-                        $('.start').removeClass('active');
-                        $.post('http://wx.eventown.com/index.php?g=Wap&m=Api&a=push_bubble&id=6&token=ooeczw1478152701', sendWinners, function(data) {
-                            data = eval("(" + data + ")");
-                            if (data.errorno == 0) {
-                                $('#prize-select option:selected').attr('disabled', 'disabled');
-                                layer.closeAll()
-                                layer.open({
-                                    type: 1,
-                                    closeBtn: 0, //不显示关闭按钮
-                                    title: false,
-                                    skin: 'bg-none',
-                                    area: ['520px', 'auto'],
-                                    anim: 1,
-                                    shade: 0.6,
-                                    shadeClose: true, //开启遮罩关闭
-                                    content: $('.winning-layer-wrap'),
-                                    end: function() {
-                                        createItem(aUser, 0.2)
-                                    }
-                                });
-                                $('#record-layer .layer-body-content').append($('#winning-layer table').clone())
-                            } else {
-                                winnersNum = []
-                                layer.msg('<h2>抽奖失败了</h2>', {
-                                    icon: 5
-                                });
-                            }
-                        });
-                    } else {
-                        t--;
-                        $(".time").html(t)
-                    }
-                },
-                970);
-        }
-    });
+        });
+    })
     $('.prize').on('click', function() {
         fnLayer($('.prize-layer-wrap'))
     });

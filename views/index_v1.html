@@ -128,11 +128,21 @@
     var sc = null;
     // ajax
     $.get('http://wx.eventown.com/index.php?g=Wap&m=Api&a=get_bubble&id=6&token=ooeczw1478152701', function(data) {
-        // data.userList.length = 200
-        aUser = data.userList;
-        aAward = data.awardList
-        createItem(aUser, 0.2);
-        createAward(aAward);
+        if (data.errorno == 0) {
+            aUser = data.userList;
+            aAward = data.awardList
+            createItem(aUser, 0.2);
+            createAward(aAward);
+            console.log(data.data.title);
+            document.title =data.data.title;
+            if (data.data.background) {
+                $('body').css({
+                    'background-image': 'url('+ data.data.background +')'
+                });
+            }
+        } else {
+            layer.msg('<h2>数据加载失败</h2>');
+        }
     });
     // 圆圈初始化
     function createItem(val, speed) {
@@ -176,9 +186,9 @@
     }
     // 改变窗口
     window.onresize = function() {
-         createItem(aUser, 0.2);;
-    }
-    // 选择抽奖类型
+            createItem(aUser, 0.2);;
+        }
+        // 选择抽奖类型
     $('#prize-select').change(function() {
         tabAward()
     });

@@ -163,15 +163,6 @@ img {
     font-size: 18px;
 }
 
-.start {
-    width: 249px;
-    height: 38px;
-    background: url('../img/btn01.png');
-    display: inline-block;
-    margin-left: 15px;
-    cursor: pointer;
-}
-
 .prize {
     width: 132px;
     height: 38px;
@@ -190,9 +181,12 @@ img {
     cursor: pointer;
 }
 
+
+/*
 .start.active {
     background: url('../img/btn01_on.png');
 }
+*/
 
 .number-area {
     display: inline-block;
@@ -240,6 +234,49 @@ img {
 }
 
 #prize-select option[disabled="disabled"] {}
+
+
+/*暂停*/
+
+.btn-group {
+    width: 249px;
+    height: 38px;
+    display: inline-block;
+    overflow: hidden;
+    margin-left: 15px;
+}
+
+.btn-ant {
+    height: 76px;
+    overflow: hidden;
+    -webkit-transition: all .20s ease;
+    -moz-transition: all .20s ease;
+    -ms-transition: all .20s ease;
+    -o-transition: all .20s ease;
+    transition: all .20s ease;
+}
+
+.start {
+    width: 249px;
+    height: 38px;
+    background: url('../img/btn01.png');
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.btn-ant .start {
+    display: block;
+    margin-left: 0;
+}
+
+.stop {
+    width: 249px;
+    height: 38px;
+    background: url('../img/btn01_on.png');
+    display: block;
+    cursor: pointer;
+}
 
 
 /*弹层*/
@@ -342,5 +379,3 @@ img {
     color: #333;
     border-bottom: 2px solid #e1e1e1;
 }
-
-
